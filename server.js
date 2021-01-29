@@ -10,7 +10,7 @@ const socketIo = require('socket.io')
 const io = socketIo(server, {
   cors: {
       origin: '*',
-      credentials: true
+      credentials: false
   }
 })
 
