@@ -10,7 +10,7 @@ const socketIo = require('socket.io')
 const io = socketIo(server, {
   cors: {
       origin: '*',
-      credentials: true
+      credentials: false
   }
 })
 
@@ -24,6 +24,10 @@ io.on('connection', socket => {
       socket.on('disconnect', () => {
           console.log('disconnected!', roomId, userId)
           socket.to(roomId).broadcast.emit('user-disconnected', userId)
+      })
+
+      socket.on('user-message',(roomId, message) => {
+        socket.to(roomId).broadcast.emit('receive-message', message)
       })
   })
 })
