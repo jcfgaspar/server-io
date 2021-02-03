@@ -26,10 +26,22 @@ io.on('connection', socket => {
           socket.to(roomId).broadcast.emit('user-disconnected', userId)
       })
 
+      
       socket.on('user-message',(roomId, message) => {
+        console.log("Enviando mensagem!")
         socket.to(roomId).broadcast.emit('receive-message', message)
       })
-  })
+      
+      socket.on('user-camera',(roomId, videoUserId) => {
+        console.log("Bloqueando camera!")
+        socket.to(roomId).broadcast.emit('receive-status-camera', videoUserId)
+      })
+
+      socket.on('user-microphone',(roomId, microphoneUserId) => {
+        console.log("Mutando microfone")
+        socket.to(roomId).broadcast.emit('receive-status-microphone', microphoneUserId)
+      })
+    })
 })
 
 const startServer = () => {
